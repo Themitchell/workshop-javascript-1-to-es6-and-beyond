@@ -319,10 +319,7 @@ section header img {
 <header><img src="img/and-e-tech-logo-300.svg" alt="&amp;e Tech" /></header>
 <h1>Optional chaining</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-js"><span class="hljs-comment">// old style (shudder!)</span>
-<span class="hljs-keyword">var</span> email = <span class="hljs-literal">null</span>;
-<span class="hljs-keyword">if</span> (user &amp;&amp; user.<span class="hljs-property">contact</span>) email = user.<span class="hljs-property">contact</span>.<span class="hljs-property">email</span>;
-<span class="hljs-comment">// or</span>
-<span class="hljs-keyword">var</span> email = user ? (user.<span class="hljs-property">contact</span> ? user.<span class="hljs-property">contact</span>.<span class="hljs-property">email</span> : <span class="hljs-literal">null</span>) : <span class="hljs-literal">null</span>
+<span class="hljs-keyword">var</span> email = (user &amp;&amp; user.<span class="hljs-property">contact</span> &amp;&amp; user.<span class="hljs-property">contact</span>.<span class="hljs-property">email</span>) ? user.<span class="hljs-property">contact</span>.<span class="hljs-property">email</span> : <span class="hljs-literal">null</span>;
 
 <span class="hljs-comment">// new style</span>
 <span class="hljs-keyword">var</span> email = user?.<span class="hljs-property">contact</span>?.<span class="hljs-property">email</span>

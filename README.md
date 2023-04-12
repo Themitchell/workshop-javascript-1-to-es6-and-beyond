@@ -77,10 +77,7 @@ helloString === 'Hello Bill!'
 
 ```js
 // old style (shudder!)
-var email = null;
-if (user && user.contact) email = user.contact.email;
-// or
-var email = user ? (user.contact ? user.contact.email : null) : null
+var email = (user && user.contact && user.contact.email) ? user.contact.email : null;
 
 // new style
 var email = user?.contact?.email

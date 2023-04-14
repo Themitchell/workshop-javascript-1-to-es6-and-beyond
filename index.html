@@ -834,21 +834,34 @@ section header img {
 <span class="hljs-keyword">var</span> otherUser1 = { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">firstName</span>: <span class="hljs-string">&#x27;William&#x27;</span> };
 <span class="hljs-keyword">var</span> otherUser2 = { <span class="hljs-attr">id</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">lastName</span>: <span class="hljs-string">&#x27;Jobs&#x27;</span> };
 
-<span class="hljs-title function_">mergeUsers</span>(userToMergeTo, otherUser1, otherUser2);
+<span class="hljs-keyword">var</span> result = <span class="hljs-title function_">mergeUsers</span>(userToMergeTo, otherUser1, otherUser2);
+
+<span class="hljs-comment">// result should preserve the id of the userToMergeTo</span>
+result === { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;Bill&#x27;</span>, <span class="hljs-attr">firstName</span>: <span class="hljs-string">&#x27;William&#x27;</span>, <span class="hljs-attr">lastName</span>: <span class="hljs-string">&#x27;Jobs&#x27;</span> }
 </code></pre>
 <div class="columns">
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-js"><span class="hljs-comment">// Old style</span>
 <span class="hljs-keyword">function</span> <span class="hljs-title function_">mergeUsers</span>(<span class="hljs-params">userToMergeTo</span>) {
   <span class="hljs-keyword">var</span> otherUsers = <span class="hljs-title class_">Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">slice</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">arguments</span>, <span class="hljs-number">1</span>);
+
   otherUsers.<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">user</span>) {
-    <span class="hljs-comment">// Object.keys FINISH ME</span>
-  })
-  <span class="hljs-keyword">return</span> [andy].<span class="hljs-title function_">concat</span>(otherUsers);
+    <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(user).<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) {
+      <span class="hljs-keyword">if</span> (key !== <span class="hljs-string">&#x27;id&#x27;</span>) userToMergeTo[key] = user[key];
+    });
+  });
+
+  <span class="hljs-keyword">return</span> userToMergeTo;
 }
 </code></pre>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-js"><span class="hljs-comment">// new style (similar to python&#x27;s *kwargs or ruby&#x27;s splat (*))</span>
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">createUserCollection</span>(<span class="hljs-params">andy, ...otherUsers</span>) {
-  <span class="hljs-keyword">return</span> [andy].<span class="hljs-title function_">concat</span>(otherUsers)
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">mergeUsers</span>(<span class="hljs-params">userToMergeTo, ...otherUsers</span>) {
+  otherUsers.<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">user</span>) {
+    <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(user).<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) {
+      <span class="hljs-keyword">if</span> (key !== <span class="hljs-string">&#x27;id&#x27;</span>) userToMergeTo[key] = user[key];
+    });
+  });
+
+  <span class="hljs-keyword">return</span> userToMergeTo;
 }
 </code></pre>
 </div>

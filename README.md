@@ -365,7 +365,7 @@ export myConstant;
 import 'my-module';
 import MyModule from 'my-module';
 import MyModule as TheirModule from 'my-module';
-import { myFunction, MyConstant as TheirConstant } from 'my-module';
+import MyModule, { myFunction, myConstant as theirConstant } from 'my-module';
 ```
 
 # Arrow functions

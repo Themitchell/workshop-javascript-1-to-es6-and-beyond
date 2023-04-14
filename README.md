@@ -190,7 +190,10 @@ var userToMergeTo = { id: 1, username: 'Bill' };
 var otherUser1 = { id: 2, firstName: 'William' };
 var otherUser2 = { id: 4, lastName: 'Jobs' };
 
-mergeUsers(userToMergeTo, otherUser1, otherUser2);
+var result = mergeUsers(userToMergeTo, otherUser1, otherUser2);
+
+// result should preserve the id of the userToMergeTo
+result === { id: 1, username: 'Bill', firstName: 'William', lastName: 'Jobs' }
 ```
 
 <div class="columns">
@@ -199,17 +202,27 @@ mergeUsers(userToMergeTo, otherUser1, otherUser2);
 // Old style
 function mergeUsers(userToMergeTo) {
   var otherUsers = Array.prototype.slice.call(arguments, 1);
+
   otherUsers.forEach(function (user) {
-    // Object.keys FINISH ME
-  })
-  return [andy].concat(otherUsers);
+    Object.keys(user).forEach(function (key) {
+      if (key !== 'id') userToMergeTo[key] = user[key];
+    });
+  });
+
+  return userToMergeTo;
 }
 ```
 
 ```js
 // new style (similar to python's *kwargs or ruby's splat (*))
-function createUserCollection(andy, ...otherUsers) {
-  return [andy].concat(otherUsers)
+function mergeUsers(userToMergeTo, ...otherUsers) {
+  otherUsers.forEach(function (user) {
+    Object.keys(user).forEach(function (key) {
+      if (key !== 'id') userToMergeTo[key] = user[key];
+    });
+  });
+
+  return userToMergeTo;
 }
 ```
 
